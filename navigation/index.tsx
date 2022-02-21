@@ -40,9 +40,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{
-      headerStyle:{backgroundColor: Colors.light.tint},
+      headerStyle:{
+        backgroundColor: Colors.light.tint,
+      },
+      headerShadowVisible:false,
       headerTintColor: Colors.light.background,
-      headerTitleAlign:"left"
+      headerTitleAlign:"left",
     }}
     >
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ 
@@ -81,6 +84,10 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].background,
         tabBarStyle:{
           backgroundColor: Colors[colorScheme].tint},
+          tabBarIndicatorStyle:{
+            backgroundColor:Colors[colorScheme].background,
+            height:3
+          }
       }}
       >
       <TopTab.Screen
