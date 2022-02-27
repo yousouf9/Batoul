@@ -1,33 +1,47 @@
- function callMe(scores){
-       // Write your code here
-    let minScores = [];
-    let maxScores = [];
-    
-    let currentMaxValue = 0;
-    let currentMinValue = 0;
-    
-    for(let i=0; i<scores.length; i++){
-         
-         if(i === 0){
-             currentMaxValue = scores[i]
-             currentMinValue = scores[i];
-             console.log(currentMaxValue, currentMinValue)
-             continue;
-         }
-         
-        if(currentMaxValue < scores[i] && currentMaxValue !== scores[i]){
-            maxScores.push(scores[i]);
-            currentMaxValue =scores[i]
-        }
-        if(currentMinValue > scores[i]){
-            minScores.push(scores[i]);
-            currentMinValue = scores[i];
-        }
-        
-        
-    }
-    
-    return [maxScores.length, minScores.length]
+ function callMe(edges, nodeA, nodeB ){
+   const graph = buildGraph(edges);
+
+   return hasPath(graph, nodeA, nodeB, new Set())
  }
 
- console.log(callMe([10, 5, 20, 20, 4, 5, 2, 25, 1]))
+  const hasPath = (graph, nodeA, nodeB, visited) =>{  
+      
+    if(visited.has(nodeA)) return false;
+
+    if(nodeA === nodeB) return true
+
+    visited.add(nodeA);
+    
+    for(let neigbor of graph[nodeA]){
+
+        if(hasPath(graph, neigbor, nodeB, visited) ===true){
+            return true;
+        }
+    }
+     return false;  
+  }
+
+ const buildGraph = (edges) =>{
+
+    const graph = {};
+
+    for (let egde of edges) {
+        const [a, b] =  egde;
+        if(!(a in graph)) graph[a] = [];
+        if(!(b in graph)) graph[b] = [];
+
+        graph[a].push(b)
+        graph[b].push(a)
+    }
+
+    return graph;
+ }
+
+ const edges = [
+     ["i", "j"],
+     ["k", "i"],
+     ["m", "k"],
+     ["k", "l"],
+     ["o", "n"],
+ ]
+console.log(callMe(edges, "i", "l"));
